@@ -1,0 +1,86 @@
+<div>
+  <div>
+    <h1>
+      Bottle #<%= @the_bottle.id %> details
+    </h1>
+
+    <div>
+      <div>
+        <a href="/bottles">
+          Go back
+        </a>
+      </div>
+
+      <div>
+        <a href="/delete_bottle/<%= @the_bottle.id %>">
+          Delete bottle
+        </a>
+      </div>
+    </div>
+
+    <dl>
+      <dt>
+        User
+      </dt>
+      <dd>
+        <%= @the_bottle.user_id %>
+      </dd>
+
+      <dt>
+        Alcohol
+      </dt>
+      <dd>
+        <%= @the_bottle.alcohol_id %>
+      </dd>
+
+      <dt>
+        Created at
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@the_bottle.created_at) %> ago
+      </dd>
+
+      <dt>
+        Updated at
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@the_bottle.updated_at) %> ago
+      </dd>
+    </dl>
+  </div>
+</div>
+
+<hr>
+
+
+<div>
+  <div>
+    <h2>
+      Edit bottle
+    </h2>
+
+    <form action="/modify_bottle/<%= @the_bottle.id %>"  method="post" >
+      <div>
+        <label for="user_id_box">
+          User
+        </label>
+
+        <input type="text" id="user_id_box" name="query_user_id" value="<%= @the_bottle.user_id %>">
+      </div>
+
+      <div>
+        <label for="alcohol_id_box">
+          Alcohol
+        </label>
+
+        <input type="text" id="alcohol_id_box" name="query_alcohol_id" value="<%= @the_bottle.alcohol_id %>">
+      </div>
+
+      <button>
+        Update bottle
+      </button>
+    </form>
+  </div>
+</div>
+
+<hr>

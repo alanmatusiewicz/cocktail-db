@@ -1,0 +1,102 @@
+<div>
+  <div>
+    <h1>
+      List of all bottles
+    </h1>
+  </div>
+</div>
+
+<hr>
+
+<div>
+  <div>
+    <h2>
+      Add a new bottle
+    </h2>
+
+    <form action="/insert_bottle" method="post">
+      <div>
+        <label for="user_id_box">
+          User
+        </label>
+
+        <input type="text" id="user_id_box" name="query_user_id">
+      </div>
+
+      <div>
+        <label for="alcohol_id_box">
+          Alcohol
+        </label>
+
+        <input type="text" id="alcohol_id_box" name="query_alcohol_id">
+      </div>
+
+      <button>
+        Create bottle
+      </button>
+    </form>
+  </div>
+</div>
+
+<hr>
+<div>
+  <div>
+    <table>
+      <tr>
+        <th>
+          ID
+        </th>
+
+        <th>
+          User
+        </th>
+
+        <th>
+          Alcohol
+        </th>
+
+        <th>
+          Created at
+        </th>
+
+        <th>
+          Updated at
+        </th>
+
+        <th>
+        </th>
+      </tr>
+
+      <% @list_of_bottles.each do |a_bottle| %>
+      <tr>
+        <td>
+          <%= a_bottle.id %>
+        </td>
+
+        <td>
+          <%= a_bottle.user_id %>
+        </td>
+
+        <td>
+          <%= a_bottle.alcohol_id %>
+        </td>
+
+        <td>
+          <%= time_ago_in_words(a_bottle.created_at) %> ago
+        </td>
+        <td>
+          <%= time_ago_in_words(a_bottle.updated_at) %> ago
+        </td>
+
+        <td>
+          <a href="/bottles/<%= a_bottle.id %>">
+            Show details
+          </a>
+        </td>
+      </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
+
+<hr>

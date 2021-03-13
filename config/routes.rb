@@ -2,6 +2,25 @@ Rails.application.routes.draw do
 
 
 
+  # Routes for the Bottle resource:
+
+  # CREATE
+  post("/insert_bottle", { :controller => "bottles", :action => "create" })
+          
+  # READ
+  get("/bottles", { :controller => "bottles", :action => "index" })
+  
+  get("/bottles/:path_id", { :controller => "bottles", :action => "show" })
+  
+  # UPDATE
+  
+  post("/modify_bottle/:path_id", { :controller => "bottles", :action => "update" })
+  
+  # DELETE
+  get("/delete_bottle/:path_id", { :controller => "bottles", :action => "destroy" })
+
+  #------------------------------
+
   # Routes for the Saved recipe resource:
 
   # CREATE
