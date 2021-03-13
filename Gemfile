@@ -15,6 +15,9 @@ gem 'sassc-rails'
 
 gem 'faker'
 
+# Ransack search gem
+gem 'ransack', github: 'activerecord-hackery/ransack'
+
 group :development do
   gem 'listen', '~> 3.2'
   gem 'spring-watcher-listen', '~> 2.0.0'
