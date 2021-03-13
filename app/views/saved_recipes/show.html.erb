@@ -1,0 +1,86 @@
+<div>
+  <div>
+    <h1>
+      Saved recipe #<%= @the_saved_recipe.id %> details
+    </h1>
+
+    <div>
+      <div>
+        <a href="/saved_recipes">
+          Go back
+        </a>
+      </div>
+
+      <div>
+        <a href="/delete_saved_recipe/<%= @the_saved_recipe.id %>">
+          Delete saved recipe
+        </a>
+      </div>
+    </div>
+
+    <dl>
+      <dt>
+        User
+      </dt>
+      <dd>
+        <%= @the_saved_recipe.user_id %>
+      </dd>
+
+      <dt>
+        Recipe
+      </dt>
+      <dd>
+        <%= @the_saved_recipe.recipe_id %>
+      </dd>
+
+      <dt>
+        Created at
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@the_saved_recipe.created_at) %> ago
+      </dd>
+
+      <dt>
+        Updated at
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@the_saved_recipe.updated_at) %> ago
+      </dd>
+    </dl>
+  </div>
+</div>
+
+<hr>
+
+
+<div>
+  <div>
+    <h2>
+      Edit saved recipe
+    </h2>
+
+    <form action="/modify_saved_recipe/<%= @the_saved_recipe.id %>"  method="post" >
+      <div>
+        <label for="user_id_box">
+          User
+        </label>
+
+        <input type="text" id="user_id_box" name="query_user_id" value="<%= @the_saved_recipe.user_id %>">
+      </div>
+
+      <div>
+        <label for="recipe_id_box">
+          Recipe
+        </label>
+
+        <input type="text" id="recipe_id_box" name="query_recipe_id" value="<%= @the_saved_recipe.recipe_id %>">
+      </div>
+
+      <button>
+        Update saved recipe
+      </button>
+    </form>
+  </div>
+</div>
+
+<hr>

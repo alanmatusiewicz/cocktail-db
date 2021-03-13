@@ -1,0 +1,102 @@
+<div>
+  <div>
+    <h1>
+      List of all saved recipes
+    </h1>
+  </div>
+</div>
+
+<hr>
+
+<div>
+  <div>
+    <h2>
+      Add a new saved recipe
+    </h2>
+
+    <form action="/insert_saved_recipe" method="post">
+      <div>
+        <label for="user_id_box">
+          User
+        </label>
+
+        <input type="text" id="user_id_box" name="query_user_id">
+      </div>
+
+      <div>
+        <label for="recipe_id_box">
+          Recipe
+        </label>
+
+        <input type="text" id="recipe_id_box" name="query_recipe_id">
+      </div>
+
+      <button>
+        Create saved recipe
+      </button>
+    </form>
+  </div>
+</div>
+
+<hr>
+<div>
+  <div>
+    <table>
+      <tr>
+        <th>
+          ID
+        </th>
+
+        <th>
+          User
+        </th>
+
+        <th>
+          Recipe
+        </th>
+
+        <th>
+          Created at
+        </th>
+
+        <th>
+          Updated at
+        </th>
+
+        <th>
+        </th>
+      </tr>
+
+      <% @list_of_saved_recipes.each do |a_saved_recipe| %>
+      <tr>
+        <td>
+          <%= a_saved_recipe.id %>
+        </td>
+
+        <td>
+          <%= a_saved_recipe.user_id %>
+        </td>
+
+        <td>
+          <%= a_saved_recipe.recipe_id %>
+        </td>
+
+        <td>
+          <%= time_ago_in_words(a_saved_recipe.created_at) %> ago
+        </td>
+        <td>
+          <%= time_ago_in_words(a_saved_recipe.updated_at) %> ago
+        </td>
+
+        <td>
+          <a href="/saved_recipes/<%= a_saved_recipe.id %>">
+            Show details
+          </a>
+        </td>
+      </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
+
+<hr>
