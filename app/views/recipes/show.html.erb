@@ -1,0 +1,116 @@
+<div>
+  <div>
+    <h1>
+      Recipe #<%= @the_recipe.id %> details
+    </h1>
+
+    <div>
+      <div>
+        <a href="/recipes">
+          Go back
+        </a>
+      </div>
+
+      <div>
+        <a href="/delete_recipe/<%= @the_recipe.id %>">
+          Delete recipe
+        </a>
+      </div>
+    </div>
+
+    <dl>
+      <dt>
+        Name
+      </dt>
+      <dd>
+        <%= @the_recipe.name %>
+      </dd>
+
+      <dt>
+        User
+      </dt>
+      <dd>
+        <%= @the_recipe.user_id %>
+      </dd>
+
+      <dt>
+        Preparation
+      </dt>
+      <dd>
+        <%= @the_recipe.preparation %>
+      </dd>
+
+      <dt>
+        Iba status
+      </dt>
+      <dd>
+        <%= @the_recipe.iba_status %>
+      </dd>
+
+      <dt>
+        Created at
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@the_recipe.created_at) %> ago
+      </dd>
+
+      <dt>
+        Updated at
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@the_recipe.updated_at) %> ago
+      </dd>
+    </dl>
+  </div>
+</div>
+
+<hr>
+
+
+<div>
+  <div>
+    <h2>
+      Edit recipe
+    </h2>
+
+    <form action="/modify_recipe/<%= @the_recipe.id %>"  method="post" >
+      <div>
+        <label for="name_box">
+          Name
+        </label>
+
+        <input type="text" id="name_box" name="query_name" value="<%= @the_recipe.name %>">
+      </div>
+
+      <div>
+        <label for="user_id_box">
+          User
+        </label>
+
+        <input type="text" id="user_id_box" name="query_user_id" value="<%= @the_recipe.user_id %>">
+      </div>
+
+      <div>
+        <label for="preparation_box">
+          Preparation
+        </label>
+
+        <textarea id="preparation_box" name="query_preparation"><%= @the_recipe.preparation %></textarea>
+      </div>
+
+      <div>
+        <input type="checkbox" id="iba_status_box" name="query_iba_status" value="1" <%= "checked" if @the_recipe.iba_status %>>
+
+        <label for="iba_status_box">
+            Iba status
+        </label>
+      </div>
+
+      <button>
+        Update recipe
+      </button>
+    </form>
+  </div>
+</div>
+
+<hr>

@@ -1,0 +1,132 @@
+<div>
+  <div>
+    <h1>
+      List of all recipes
+    </h1>
+  </div>
+</div>
+
+<hr>
+
+<div>
+  <div>
+    <h2>
+      Add a new recipe
+    </h2>
+
+    <form action="/insert_recipe" method="post">
+      <div>
+        <label for="name_box">
+          Name
+        </label>
+
+        <input type="text" id="name_box" name="query_name">
+      </div>
+
+      <div>
+        <label for="user_id_box">
+          User
+        </label>
+
+        <input type="text" id="user_id_box" name="query_user_id">
+      </div>
+
+      <div>
+        <label for="preparation_box">
+          Preparation
+        </label>
+
+        <textarea id="preparation_box" name="query_preparation" rows="3"></textarea>
+      </div>
+
+      <div>
+        <input type="checkbox" id="iba_status_box" name="query_iba_status" value="1">
+
+        <label for="iba_status_box">Iba status</label>
+      </div>
+
+      <button>
+        Create recipe
+      </button>
+    </form>
+  </div>
+</div>
+
+<hr>
+<div>
+  <div>
+    <table>
+      <tr>
+        <th>
+          ID
+        </th>
+
+        <th>
+          Name
+        </th>
+
+        <th>
+          User
+        </th>
+
+        <th>
+          Preparation
+        </th>
+
+        <th>
+          Iba status
+        </th>
+
+        <th>
+          Created at
+        </th>
+
+        <th>
+          Updated at
+        </th>
+
+        <th>
+        </th>
+      </tr>
+
+      <% @list_of_recipes.each do |a_recipe| %>
+      <tr>
+        <td>
+          <%= a_recipe.id %>
+        </td>
+
+        <td>
+          <%= a_recipe.name %>
+        </td>
+
+        <td>
+          <%= a_recipe.user_id %>
+        </td>
+
+        <td>
+          <%= a_recipe.preparation %>
+        </td>
+
+        <td>
+          <%= a_recipe.iba_status %>
+        </td>
+
+        <td>
+          <%= time_ago_in_words(a_recipe.created_at) %> ago
+        </td>
+        <td>
+          <%= time_ago_in_words(a_recipe.updated_at) %> ago
+        </td>
+
+        <td>
+          <a href="/recipes/<%= a_recipe.id %>">
+            Show details
+          </a>
+        </td>
+      </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
+
+<hr>
