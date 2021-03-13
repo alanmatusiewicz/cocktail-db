@@ -106,6 +106,8 @@ Rails.application.routes.draw do
   get("/recipes", { :controller => "recipes", :action => "index" })
   
   get("/recipes/:path_id", { :controller => "recipes", :action => "show" })
+
+  get("/random", { :controller => "recipes", :action => "random" })
   
   # UPDATE
   
