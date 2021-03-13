@@ -1,0 +1,134 @@
+<div>
+  <div>
+    <h1>
+      List of all ingredients
+    </h1>
+  </div>
+</div>
+
+<hr>
+
+<div>
+  <div>
+    <h2>
+      Add a new ingredient
+    </h2>
+
+    <form action="/insert_ingredient" method="post">
+      <div>
+        <label for="recipe_id_box">
+          Recipe
+        </label>
+
+        <input type="text" id="recipe_id_box" name="query_recipe_id">
+      </div>
+
+      <div>
+        <label for="alcohol_id_box">
+          Alcohol
+        </label>
+
+        <input type="text" id="alcohol_id_box" name="query_alcohol_id">
+      </div>
+
+      <div>
+        <label for="measure_ml_box">
+          Measure ml
+        </label>
+
+        <input type="text" id="measure_ml_box" name="query_measure_ml">
+      </div>
+
+      <div>
+        <label for="measure_box">
+          Measure
+        </label>
+
+        <input type="text" id="measure_box" name="query_measure">
+      </div>
+
+      <button>
+        Create ingredient
+      </button>
+    </form>
+  </div>
+</div>
+
+<hr>
+<div>
+  <div>
+    <table>
+      <tr>
+        <th>
+          ID
+        </th>
+
+        <th>
+          Recipe
+        </th>
+
+        <th>
+          Alcohol
+        </th>
+
+        <th>
+          Measure ml
+        </th>
+
+        <th>
+          Measure
+        </th>
+
+        <th>
+          Created at
+        </th>
+
+        <th>
+          Updated at
+        </th>
+
+        <th>
+        </th>
+      </tr>
+
+      <% @list_of_ingredients.each do |an_ingredient| %>
+      <tr>
+        <td>
+          <%= an_ingredient.id %>
+        </td>
+
+        <td>
+          <%= an_ingredient.recipe_id %>
+        </td>
+
+        <td>
+          <%= an_ingredient.alcohol_id %>
+        </td>
+
+        <td>
+          <%= an_ingredient.measure_ml %>
+        </td>
+
+        <td>
+          <%= an_ingredient.measure %>
+        </td>
+
+        <td>
+          <%= time_ago_in_words(an_ingredient.created_at) %> ago
+        </td>
+        <td>
+          <%= time_ago_in_words(an_ingredient.updated_at) %> ago
+        </td>
+
+        <td>
+          <a href="/ingredients/<%= an_ingredient.id %>">
+            Show details
+          </a>
+        </td>
+      </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
+
+<hr>
