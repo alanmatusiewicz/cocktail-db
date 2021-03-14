@@ -56,73 +56,39 @@
 <div>
   <div>
     <table>
-      <tr>
+      <tr>    
+
         <th>
-          ID
+          Recipe
         </th>
 
         <th>
-          Name
+          IBA Official
         </th>
 
         <th>
-          User
+          Ingredients
         </th>
 
-        <th>
-          Preparation
-        </th>
-
-        <th>
-          Iba status
-        </th>
-
-        <th>
-          Created at
-        </th>
-
-        <th>
-          Updated at
-        </th>
-
-        <th>
-        </th>
       </tr>
 
       <% @list_of_recipes.each do |a_recipe| %>
-      <tr>
+      <tr>   
+
         <td>
-          <%= a_recipe.id %>
+          <a href="/recipes/<%= a_recipe.id %>"><%= a_recipe.name %></a>
         </td>
 
         <td>
-          <%= a_recipe.name %>
+          <% if a_recipe.iba_status == true %>
+            <i class="fas fa-award"></i>
+          <% end %>
         </td>
 
         <td>
-          <%= a_recipe.user_id %>
+          <% a_recipe.ingredients%>
         </td>
 
-        <td>
-          <%= a_recipe.preparation %>
-        </td>
-
-        <td>
-          <%= a_recipe.iba_status %>
-        </td>
-
-        <td>
-          <%= time_ago_in_words(a_recipe.created_at) %> ago
-        </td>
-        <td>
-          <%= time_ago_in_words(a_recipe.updated_at) %> ago
-        </td>
-
-        <td>
-          <a href="/recipes/<%= a_recipe.id %>">
-            Show details
-          </a>
-        </td>
       </tr>
       <% end %>
     </table>

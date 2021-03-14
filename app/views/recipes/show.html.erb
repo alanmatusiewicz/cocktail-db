@@ -1,8 +1,15 @@
 <div>
   <div>
     <h1>
-      Recipe #<%= @the_recipe.id %> details
+      <%= @the_recipe.name %>
     </h1>
+
+    <% if @the_recipe.iba_status == true %>
+      <div>
+        <i class="fas fa-award"></i>
+        IBA Official Cocktail
+      </div>
+    <% end %>
 
     <div>
       <div>
@@ -18,33 +25,23 @@
       </div>
     </div>
 
+    <hr>
+
     <dl>
-      <dt>
-        Name
-      </dt>
-      <dd>
-        <%= @the_recipe.name %>
-      </dd>
 
       <dt>
-        User
+        Ingredients
       </dt>
-      <dd>
-        <%= @the_recipe.user_id %>
-      </dd>
+      <% @the_recipe.all_ingredients.each do |a_ingredient| %>
+        <dd>
+          
+
 
       <dt>
         Preparation
       </dt>
       <dd>
         <%= @the_recipe.preparation %>
-      </dd>
-
-      <dt>
-        Iba status
-      </dt>
-      <dd>
-        <%= @the_recipe.iba_status %>
       </dd>
 
       <dt>
