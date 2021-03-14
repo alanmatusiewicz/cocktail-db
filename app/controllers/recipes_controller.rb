@@ -21,8 +21,6 @@ class RecipesController < ApplicationController
     the_recipe = Recipe.new
     the_recipe.name = params.fetch("query_name")
     the_recipe.user_id = @current_user.id
-    the_recipe.preparation = params.fetch("query_preparation")
-    the_recipe.iba_status = params.fetch("query_iba_status", false)
 
     if the_recipe.valid?
       the_recipe.save
@@ -37,7 +35,7 @@ class RecipesController < ApplicationController
     the_recipe = Recipe.where({ :id => the_id }).at(0)
 
     the_recipe.name = params.fetch("query_name")
-    the_recipe.user_id = params.fetch("query_user_id")
+    the_recipe.user_id = @current_user.id
     the_recipe.preparation = params.fetch("query_preparation")
     the_recipe.iba_status = params.fetch("query_iba_status", false)
 

@@ -15,4 +15,8 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def index
+    render({ :template => "index.html.erb" })
+  end
+
 end

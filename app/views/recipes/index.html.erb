@@ -10,11 +10,11 @@
 
 <div>
   <div>
-    <h2>
+    <h3>
       Add a new recipe
-    </h2>
+    </h3>
 
-    <form action="/insert_recipe" method="post">
+    <form action="/create_recipe_form" method="post">
       <div>
         <label for="name_box">
           Name
@@ -23,29 +23,7 @@
         <input type="text" id="name_box" name="query_name">
       </div>
 
-      <div>
-        <label for="user_id_box">
-          User
-        </label>
-
-        <input type="text" id="user_id_box" name="query_user_id">
-      </div>
-
-      <div>
-        <label for="preparation_box">
-          Preparation
-        </label>
-
-        <textarea id="preparation_box" name="query_preparation" rows="3"></textarea>
-      </div>
-
-      <div>
-        <input type="checkbox" id="iba_status_box" name="query_iba_status" value="1">
-
-        <label for="iba_status_box">Iba status</label>
-      </div>
-
-      <button>
+      <button type="button" class="btn btn-outline-secondary btn-sm">
         Create recipe
       </button>
     </form>
@@ -53,10 +31,11 @@
 </div>
 
 <hr>
+
 <div>
   <div>
-    <table>
-      <tr>    
+    <table class="table table-hover table-striped col-12">
+      <thead class="thead-dark">    
 
         <th>
           Recipe
@@ -79,14 +58,14 @@
           <a href="/recipes/<%= a_recipe.id %>"><%= a_recipe.name %></a>
         </td>
 
-        <td>
+        <td class="text-center">
           <% if a_recipe.iba_status == true %>
             <i class="fas fa-award"></i>
           <% end %>
         </td>
 
         <td>
-          <%= a_recipe.ingredient_list%>
+          <%= a_recipe.ingredient_list.to_s.gsub(/[^a-z0-9\s\,]/i, "").capitalize %>
         </td>
 
       </tr>

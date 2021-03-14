@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-
+  get("/", { :controller => "application", :action => "index" })
 
   # Routes for the Na ingredient resource:
 
@@ -101,7 +101,7 @@ Rails.application.routes.draw do
 
   # CREATE
   post("/insert_recipe", { :controller => "recipes", :action => "create" })
-          
+         
   # READ
   get("/recipes", { :controller => "recipes", :action => "index" })
   
@@ -110,6 +110,8 @@ Rails.application.routes.draw do
   get("/random", { :controller => "recipes", :action => "random" })
   
   # UPDATE
+
+  get("/modify_recipe_form/:path_id", { :controller => "recipes", :action => "update_form" })
   
   post("/modify_recipe/:path_id", { :controller => "recipes", :action => "update" })
   

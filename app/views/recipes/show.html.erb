@@ -2,26 +2,27 @@
   <div>
     <h1>
       <%= @the_recipe.name %>
+      
+        <% if @the_recipe.iba_status == true %>
+            <i class="fas fa-award"></i>
+        <% end %>
+
     </h1>
 
     <% if @the_recipe.iba_status == true %>
       <div>
-        <i class="fas fa-award"></i>
         IBA Official Cocktail
       </div>
     <% end %>
 
+    <br>
     <div>
       <div>
-        <a href="/recipes">
-          Go back
-        </a>
-      </div>
-
-      <div>
-        <a href="/delete_recipe/<%= @the_recipe.id %>">
-          Delete recipe
-        </a>
+        <form action="/recipes">
+          <button type="button" class="btn btn-outline-secondary btn-sm">
+            Go back
+          </button>
+        </form>
       </div>
     </div>
 
@@ -33,18 +34,21 @@
         Ingredients
       </dt>
 
-      <% @the_recipe.ingredients.order({ :measure_ml => :desc }).each do |a_ingredient| %>
-        <dd>
-          <%= a_ingredient.summary %>
-        </dd>
-      <% end %>
+      <dd>
+        <ul>
+          <% @the_recipe.ingredients.order({ :measure_ml => :desc }).each do |a_ingredient| %>
+            <li>
+              <%= a_ingredient.summary %>
+            </li>
+          <% end %>
 
-      <% @the_recipe.na_ingredients.order({ :name => :desc }).each do |a_na_ingredient| %>
-        <dd>
-          <%= a_na_ingredient.summary %>
-        </dd>
-      <% end %>          
-
+          <% @the_recipe.na_ingredients.order({ :name => :desc }).each do |a_na_ingredient| %>
+            <li>
+              <%= a_na_ingredient.summary %>
+            </li>
+          <% end %>
+        </ul>
+      </dd>
 
       <dt>
         Preparation
@@ -54,17 +58,10 @@
       </dd>
 
       <dt>
-        Created at
       </dt>
+      <br>
       <dd>
-        <%= time_ago_in_words(@the_recipe.created_at) %> ago
-      </dd>
-
-      <dt>
-        Updated at
-      </dt>
-      <dd>
-        <%= time_ago_in_words(@the_recipe.updated_at) %> ago
+        Updated <%= time_ago_in_words(@the_recipe.updated_at) %> ago
       </dd>
     </dl>
   </div>
@@ -72,51 +69,59 @@
 
 <hr>
 
-
-<div>
+<% if @current_user.id == @the_recipe.user.id %>
   <div>
-    <h2>
-      Edit recipe
-    </h2>
+    <div>
+      <h2>
+        Edit recipe
+      </h2>
 
-    <form action="/modify_recipe/<%= @the_recipe.id %>"  method="post" >
-      <div>
-        <label for="name_box">
-          Name
-        </label>
+      <form action="/modify_recipe/<%= @the_recipe.id %>"  method="post" >
+        <div>
+          <label for="name_box">
+            Name
+          </label>
 
-        <input type="text" id="name_box" name="query_name" value="<%= @the_recipe.name %>">
-      </div>
+          <input type="text" id="name_box" name="query_name" value="<%= @the_recipe.name %>">
+        </div>
 
-      <div>
-        <label for="user_id_box">
-          User
-        </label>
+        <div>
+          <label for="user_id_box">
+            User
+          </label>
 
-        <input type="text" id="user_id_box" name="query_user_id" value="<%= @the_recipe.user_id %>">
-      </div>
+          <input type="text" id="user_id_box" name="query_user_id" value="<%= @the_recipe.user_id %>">
+        </div>
 
-      <div>
-        <label for="preparation_box">
-          Preparation
-        </label>
+        <div>
+          <label for="preparation_box">
+            Preparation
+          </label>
 
-        <textarea id="preparation_box" name="query_preparation"><%= @the_recipe.preparation %></textarea>
-      </div>
+          <textarea id="preparation_box" name="query_preparation"><%= @the_recipe.preparation %></textarea>
+        </div>
 
-      <div>
-        <input type="checkbox" id="iba_status_box" name="query_iba_status" value="1" <%= "checked" if @the_recipe.iba_status %>>
+        <div>
+          <input type="checkbox" id="iba_status_box" name="query_iba_status" value="1" <%= "checked" if @the_recipe.iba_status %>>
 
-        <label for="iba_status_box">
-            Iba status
-        </label>
-      </div>
+          <label for="iba_status_box">
+              Iba status
+          </label>
+        </div>
 
-      <button>
-        Update recipe
+        <button type="button" class="btn btn-secondary">
+          Update recipe
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <hr>
+
+    <form action="/delete_recipe/<%= @the_recipe.id %>">
+      <button type="button" class="btn btn-danger btn-sm">
+        Delete recipe
       </button>
     </form>
-  </div>
-</div>
-
-<hr>
+  <hr>
+<% end %>
