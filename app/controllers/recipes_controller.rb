@@ -57,4 +57,11 @@ class RecipesController < ApplicationController
 
     redirect_to("/recipes", { :notice => "Recipe deleted successfully."} )
   end
+
+  def random
+    the_id = Recipe.all.sample.id
+
+    redirect_to("/recipes/#{the_id}")
+  end
+
 end
