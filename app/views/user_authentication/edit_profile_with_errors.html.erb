@@ -1,7 +1,9 @@
 <div >
-  <h5>
+  <h4 class="text-center">
     Edit User Account
-  </h5>
+  </h4>
+
+  <hr>
 
   <% if @user.errors.any? %>
   <% @user.errors.full_messages.each do |message| %>
@@ -36,3 +38,5 @@
     </form>
   </div>
 </div>
+
+<hr>

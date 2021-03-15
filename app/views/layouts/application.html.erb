@@ -28,14 +28,20 @@
   </style>
 </head>
 
-<body>
+<body style="background-color: gainsboro;">
   <%= render "shared/navbar" %>
 
   <div class="container">
+  <div class="jumbotron" style="background-color: white;">
     <%= render "shared/flashes" %>
 
     <%= yield %>
   </div>
+  </div>
 
 </body>
+
+<footer class="text-muted text-center">
+  <small>Copyright <span>&#169;</span> 2021 Alan Matusiewicz. All rights reserved.</small>
+</footer>
 </html>

@@ -1,23 +1,44 @@
 <div>
   <div>
-    <h1>
+    <h1 class="text-center">
       <%= @the_recipe.name %>
       
         <% if @the_recipe.iba_status == true %>
-            <i class="fas fa-award"></i>
+            <i class="fas fa-award" style="color: goldenrod;"></i>
         <% end %>
 
     </h1>
 
     <% if @the_recipe.iba_status == true %>
-      <div>
+      <h5 class="text-center">
         IBA Official Cocktail
-      </div>
+      </h5>
     <% end %>
 
-    <br>
+    <hr>
+
+    <% matching_records = SavedRecipe.where({ :user_id => @current_user.id, :recipe_id => @the_recipe.id }) %>
+    <% saved_recipe = matching_records.first %>
+
+    <div class="text-center mb-3">
+      <% if saved_recipe != nil %>
+        <form action="/delete_saved_recipe/<%= @the_recipe.id %>">
+          <button class="btn btn-danger btn-sm">
+            Remove Save
+          </button>
+        </form>
+      <% else %>
+        <form action="/insert_saved_recipe" method="post">
+          <input name="query_recipe_id" type="hidden" value="<%= @the_recipe.id %>">
+          <button class="btn btn-outline-secondary btn-sm">
+            Save
+          </button>
+        </form>
+      <% end %>
+    </div>
+
     <div>
-      <div>
+      <div class="text-center mb-3">
         <form action="/recipes">
           <button type="button" class="btn btn-outline-secondary btn-sm">
             Go back
@@ -28,6 +49,7 @@
 
     <hr>
 
+    <div class="container d-flex col-6 justify-content-center">
     <dl>
 
       <dt>
@@ -64,6 +86,7 @@
         Updated <%= time_ago_in_words(@the_recipe.updated_at) %> ago
       </dd>
     </dl>
+    </div>
   </div>
 </div>
 

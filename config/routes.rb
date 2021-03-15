@@ -66,6 +66,7 @@ Rails.application.routes.draw do
           
   # READ
   get("/bottles", { :controller => "bottles", :action => "index" })
+  get("/bar/bottles", { :controller => "bottles", :action => "index" })
   
   # get("/bottles/:path_id", { :controller => "bottles", :action => "show" })
   
@@ -85,6 +86,7 @@ Rails.application.routes.draw do
           
   # READ
   get("/saved_recipes", { :controller => "saved_recipes", :action => "index" })
+  get("/bar/saved_recipes", { :controller => "saved_recipes", :action => "index" })
   
   # get("/saved_recipes/:path_id", { :controller => "saved_recipes", :action => "show" })
   
