@@ -124,7 +124,7 @@
           <span style="float:right;">
             <form action="/delete_ingredient/<%= a_ingredient.id %>">
               <div class="input-group mb-3">
-                <input name="query_recipe_id" type="hidden" value="<%= @the_recipe.id %>">
+                <input type="hidden" name="query_recipe_id" value="<%= @the_recipe.id %>">
                 <button class="btn btn-outline-danger">
                   Delete
                 </button>
@@ -156,6 +156,10 @@
 
         </div>
       </form>
+
+      <p class="text-center">
+        Is the alcohol type you need not listed? Add it from <a href="/bar/bottles">your Bottles page</a> and return to or reload this page. 
+      </p>
 
     </div>
   

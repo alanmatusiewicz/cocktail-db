@@ -22,9 +22,9 @@ class NaIngredientsController < ApplicationController
 
     the_na_ingredient = NaIngredient.new
     the_na_ingredient.recipe_id = @recipe_id
-    the_na_ingredient.name = params.fetch("query_name")
-    the_na_ingredient.measure = params.fetch("query_measure")
-    the_na_ingredient.unit = params.fetch("query_unit")
+    the_na_ingredient.name = params.fetch("query_name").downcase
+    the_na_ingredient.measure = params.fetch("query_measure").downcase
+    the_na_ingredient.unit = params.fetch("query_unit").downcase
 
     if the_na_ingredient.valid?
       the_na_ingredient.save
@@ -39,9 +39,9 @@ class NaIngredientsController < ApplicationController
     the_id = params.fetch("query_na_ingredient_id")
     the_na_ingredient = NaIngredient.where({ :id => the_id }).at(0)
 
-    the_na_ingredient.name = params.fetch("query_name")
-    the_na_ingredient.measure = params.fetch("query_measure")
-    the_na_ingredient.unit = params.fetch("query_unit")
+    the_na_ingredient.name = params.fetch("query_name").downcase
+    the_na_ingredient.measure = params.fetch("query_measure").downcase
+    the_na_ingredient.unit = params.fetch("query_unit").downcase
 
     if the_na_ingredient.valid?
       the_na_ingredient.save
@@ -52,6 +52,7 @@ class NaIngredientsController < ApplicationController
   end
 
   def destroy
+    @recipe_id = params.fetch("query_recipe_id")
     the_id = params.fetch("path_id")
     the_na_ingredient = NaIngredient.where({ :id => the_id }).at(0)
 
