@@ -2,17 +2,15 @@
   <div>
     <h1 class="text-center">
       <%= @the_recipe.name %>
-      
-        <% if @the_recipe.iba_status == true %>
-            <i class="fas fa-award" style="color: goldenrod;"></i>
-        <% end %>
-
     </h1>
-
+      
     <% if @the_recipe.iba_status == true %>
-      <h5 class="text-center">
-        IBA Official Cocktail
-      </h5>
+      <div class="text-center">
+        <i class="fas fa-award h1" style="color: goldenrod;"></i>
+        <h5>
+          IBA Official Cocktail
+        </h5>
+      </div>
     <% end %>
 
     <hr>

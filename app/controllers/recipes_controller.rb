@@ -2,7 +2,7 @@ class RecipesController < ApplicationController
   def index
     matching_recipes = Recipe.all
 
-    @list_of_recipes = matching_recipes.order({ :created_at => :desc })
+    @list_of_recipes = matching_recipes.order({ :name => :asc })
 
     render({ :template => "recipes/index.html.erb" })
   end
