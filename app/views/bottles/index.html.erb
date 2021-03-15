@@ -1,7 +1,7 @@
 <div>
   <div>
     <h1>
-      List of all bottles
+      My Bottles
     </h1>
   </div>
 </div>
@@ -10,89 +10,63 @@
 
 <div>
   <div>
-    <h2>
+    <h4>
       Add a new bottle
-    </h2>
+    </h4>
 
     <form action="/insert_bottle" method="post">
-      <div>
-        <label for="user_id_box">
-          User
-        </label>
-
-        <input type="text" id="user_id_box" name="query_user_id">
-      </div>
-
       <div>
         <label for="alcohol_id_box">
           Alcohol
         </label>
 
-        <input type="text" id="alcohol_id_box" name="query_alcohol_id">
+        <select id="alcohol_id_box" name="query_alcohol_id">
+          <% Alcohol.all.order(:name).each do |a_alcohol|%>
+            <option value=<%= a_alcohol.id %>>
+              <%= a_alcohol.name.capitalize %>
+            </option>
+          <% end %>
+        </select>
+      
+        <button class="btn btn-outline-secondary btn-sm">
+          Add bottle to bar
+        </button>
       </div>
-
-      <button>
-        Create bottle
-      </button>
     </form>
   </div>
 </div>
 
 <hr>
+
 <div>
   <div>
-    <table>
-      <tr>
-        <th>
-          ID
-        </th>
-
-        <th>
-          User
-        </th>
+    <table class="table table-hover table-striped col-12">
+      <thead class="thead-dark">    
 
         <th>
           Alcohol
         </th>
 
         <th>
-          Created at
         </th>
 
-        <th>
-          Updated at
-        </th>
-
-        <th>
-        </th>
       </tr>
 
       <% @list_of_bottles.each do |a_bottle| %>
-      <tr>
+      <tr>   
+
         <td>
-          <%= a_bottle.id %>
+          <%= a_bottle.alcohol.name.capitalize %></a>
         </td>
 
         <td>
-          <%= a_bottle.user_id %>
+          <form action="/delete_recipe/<%= a_bottle.id %>">
+            <button class="btn btn-danger btn-sm">
+              Remove bottle
+            </button>
+          </form>
         </td>
 
-        <td>
-          <%= a_bottle.alcohol_id %>
-        </td>
-
-        <td>
-          <%= time_ago_in_words(a_bottle.created_at) %> ago
-        </td>
-        <td>
-          <%= time_ago_in_words(a_bottle.updated_at) %> ago
-        </td>
-
-        <td>
-          <a href="/bottles/<%= a_bottle.id %>">
-            Show details
-          </a>
-        </td>
       </tr>
       <% end %>
     </table>

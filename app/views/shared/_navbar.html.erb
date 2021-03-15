@@ -10,31 +10,6 @@
             <li class="nav-item">
                 <a class="nav-link" href="/random">Random Recipe</a>
             </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Resources
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a href="/na_ingredients" class="dropdown-item">
-                  Na Ingredients
-                </a>
-                <a href="/alcohols" class="dropdown-item">
-                  Alcohols
-                </a>
-                <a href="/ingredients" class="dropdown-item">
-                  Ingredients
-                </a>
-                <a href="/bottles" class="dropdown-item">
-                  Bottles
-                </a>
-                <a href="/saved_recipes" class="dropdown-item">
-                  Saved Recipes
-                </a>
-                <a href="/recipes" class="dropdown-item">
-                  Recipes
-                </a>
-              </div>
-            </li>
         </ul>
     </div>
 
@@ -47,17 +22,33 @@
 
     <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
         <ul class="navbar-nav ml-auto">
+            
             <% if @current_user.nil? %>
               <li class="nav-item">
                 <a class="nav-link" href="/user_sign_in">Sign In</a>
-              </li>            
+              </li>      
+
             <% else %>
-              <li class="nav-item">
-                  <a class="nav-link" href="#">My Bar</a>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarmybarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  My Bar
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarmybarDropdown">
+                  <a href="/bottles" class="dropdown-item">
+                    Bottles
+                  </a>
+                  <a href="/bar_recipes" class="dropdown-item">
+                    Bar Menu
+                  </a>
+                  <a href="/bar/random" class="dropdown-item">
+                    Random Recipe
+                  </a>
+                  <a href="/saved_recipes" class="dropdown-item">
+                    My Recipes
+                  </a>
+                </div>
               </li>
-              <li class="nav-item">
-                  <a class="nav-link" href="/saved_recipes">My Recipes</a>
-              </li>
+              
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarAccountDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 My Account

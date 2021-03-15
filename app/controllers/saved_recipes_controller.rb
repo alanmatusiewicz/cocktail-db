@@ -1,10 +1,14 @@
 class SavedRecipesController < ApplicationController
   def index
-    matching_saved_recipes = SavedRecipe.all
+    matching_saved_recipes = SavedRecipe.where({ :user_id => @current_user.id })
 
-    @list_of_saved_recipes = matching_saved_recipes.order({ :created_at => :desc })
+    @list_of_saved_recipes = matching_saved_recipes.order({ :name => :asc })
 
-    render({ :template => "saved_recipes/index.html.erb" })
+    matching_recipes = Recipe.where({ :user_id => @current_user.id })
+
+    @list_of_recipes = matching_recipes.order({ :name => :asc })
+    
+    matching_recipes = Recipe.where({ :user_id => @current_user.id })
   end
 
   def show

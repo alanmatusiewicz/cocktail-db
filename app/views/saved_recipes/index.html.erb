@@ -1,7 +1,7 @@
 <div>
   <div>
     <h1>
-      List of all saved recipes
+      My Recipes
     </h1>
   </div>
 </div>
@@ -11,88 +11,161 @@
 <div>
   <div>
     <h2>
-      Add a new saved recipe
+      My Saved Recipes
     </h2>
+  </div>
+
+  <div>
+    <h4>
+      Add a new saved recipe
+    </h4>
 
     <form action="/insert_saved_recipe" method="post">
-      <div>
-        <label for="user_id_box">
-          User
-        </label>
-
-        <input type="text" id="user_id_box" name="query_user_id">
-      </div>
-
+      
       <div>
         <label for="recipe_id_box">
           Recipe
         </label>
 
-        <input type="text" id="recipe_id_box" name="query_recipe_id">
-      </div>
+        <select id="recipe_id_box" name="query_recipe_id">
+          <% Recipe.all.order(:name).each do |a_recipe|%>
+            <option value=<%= a_recipe.id %>>
+              <%= a_recipe.name %> - <%= a_recipe.ingredient_list.to_s.gsub(/[^a-zé0-9\s\,]/i, "").capitalize %>
+            </option>
+          <% end %>
+        </select>
 
-      <button>
-        Create saved recipe
-      </button>
+        <button class="btn btn-outline-secondary btn-sm">
+          Create saved recipe
+        </button>
+      </div>
     </form>
   </div>
 </div>
 
 <hr>
+
 <div>
   <div>
-    <table>
-      <tr>
-        <th>
-          ID
-        </th>
-
-        <th>
-          User
-        </th>
+    <table class="table table-hover table-striped col-12">
+      <thead class="thead-dark">    
 
         <th>
           Recipe
         </th>
 
         <th>
-          Created at
+          IBA Official
         </th>
 
         <th>
-          Updated at
+          Ingredients
         </th>
 
         <th>
         </th>
+
       </tr>
 
       <% @list_of_saved_recipes.each do |a_saved_recipe| %>
-      <tr>
+      <tr>   
+
         <td>
-          <%= a_saved_recipe.id %>
+          <a href="/recipes/<%= a_saved_recipe.recipe.id %>"><%= a_saved_recipe.recipe.name %></a>
+        </td>
+
+        <td class="text-center">
+          <% if a_saved_recipe.recipe.iba_status == true %>
+            <i class="fas fa-award"></i>
+          <% end %>
         </td>
 
         <td>
-          <%= a_saved_recipe.user_id %>
+          <%= a_saved_recipe.recipe.ingredient_list.to_s.gsub(/[^a-zé0-9\s\,]/i, "").capitalize %>
         </td>
 
         <td>
-          <%= a_saved_recipe.recipe_id %>
+          <form action="delete_saved_recipe/<%= a_saved_recipe.id %>">
+            <button class="btn btn-danger btn-sm">
+              Remove saved recipe
+            </button>
+          </form>
+        </td>
+
+      </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
+
+<hr>
+
+<div>
+  <div>
+    <h2>
+      My Created Recipes
+    </h2>
+  </div>
+
+  <div>
+    <h4>
+      Create a new recipe
+    </h4>
+
+    <form action="/create_recipe_form" method="post">
+      <div>
+        <label for="name_box">
+          Name
+        </label>
+
+        <input type="text" id="name_box" name="query_name" placeholder="ie: Singapore Sling">
+      
+        <button class="btn btn-outline-secondary btn-sm">
+          Create recipe
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<hr>
+
+<div>
+  <div>
+    <table class="table table-hover table-striped col-12">
+      <thead class="thead-dark">    
+
+        <th>
+          Recipe
+        </th>
+
+        <th>
+          IBA Official
+        </th>
+
+        <th>
+          Ingredients
+        </th>
+
+      </tr>
+
+      <% @list_of_recipes.each do |a_recipe| %>
+      <tr>   
+
+        <td>
+          <a href="/recipes/<%= a_recipe.id %>"><%= a_recipe.name %></a>
+        </td>
+
+        <td class="text-center">
+          <% if a_recipe.iba_status == true %>
+            <i class="fas fa-award"></i>
+          <% end %>
         </td>
 
         <td>
-          <%= time_ago_in_words(a_saved_recipe.created_at) %> ago
-        </td>
-        <td>
-          <%= time_ago_in_words(a_saved_recipe.updated_at) %> ago
+          <%= a_recipe.ingredient_list.to_s.gsub(/[^a-zé0-9\s\,]/i, "").capitalize %>
         </td>
 
-        <td>
-          <a href="/saved_recipes/<%= a_saved_recipe.id %>">
-            Show details
-          </a>
-        </td>
       </tr>
       <% end %>
     </table>

@@ -59,7 +59,7 @@ class RecipesController < ApplicationController
   def random
     the_id = Recipe.all.sample.id
 
-    redirect_to("/recipes/#{the_id}")
+    redirect_to("/recipes/#{the_id}", { :notice => "Your bar may not have the ingredients needed for this random cocktail recipe." })
   end
 
 end

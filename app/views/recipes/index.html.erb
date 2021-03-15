@@ -11,7 +11,7 @@
 <div>
   <div>
     <h4>
-      Add a new recipe
+      Create a new recipe
     </h4>
 
     <form action="/create_recipe_form" method="post">
@@ -20,12 +20,12 @@
           Name
         </label>
 
-        <input type="text" id="name_box" name="query_name">
+        <input type="text" id="name_box" name="query_name" placeholder="ie: Singapore Sling">
+      
+        <button class="btn btn-outline-secondary btn-sm">
+          Create recipe
+        </button>
       </div>
-
-      <button class="btn btn-outline-secondary btn-sm">
-        Create recipe
-      </button>
     </form>
   </div>
 </div>
@@ -65,7 +65,7 @@
         </td>
 
         <td>
-          <%= a_recipe.ingredient_list.to_s.gsub(/[^a-z0-9\s\,]/i, "").capitalize %>
+          <%= a_recipe.ingredient_list.to_s.gsub(/[^a-zé0-9\s\,]/i, "").capitalize %>
         </td>
 
       </tr>
