@@ -1,63 +1,57 @@
-  <div>
-    <h1 class="text-center">
-      New Cocktail
-    </h1> 
-  </div>
+<div>
+  <h1 class="text-center">
+    New Cocktail
+  </h1>
 
   <hr>
 
+  <!-- Recipe Buttons -->
 
-<!-- Recipe Buttons -->
+    <div class="col-6 container justify-content-center">
+      <form action="<%= @source_url %>">
+        <div class="input-group text-center mb-3">
+          <button class="btn btn-outline-danger btn-sm btn-block">
+            Cancel and go back
+          </button>
+        </div>
+      </form>
+    </div>
+    
+    <hr>
 
-  <div class="text-center mb-3">
+  <!-- Recipe Details -->
 
-    <form action="<%= @source_url %>">
-      <button class="btn btn-outline-danger btn-sm">
-        Cancel and go back
-      </button>
-    </form>
-  </div>
-   
-  <hr>
-
-
-<!-- Recipe Details -->
-
-  <div class="container col-8 text-center">
-
-    <h4>
+    <h4 class="text-center">
         Enter recipe details
     </h4>
 
-    <form action="/insert_recipe" method="post">
+    <div class="col-6 container justify-content-center">
+      <form action="/insert_recipe" method="post">
+            
+          <div class="mb-3">
+            <label for="name_box">Cocktail Name</label>
+            <input type="text" id="name_box" name="query_name" class="form-control" placeholder="Cocktail Name, ie: Manhattan" aria-label="Cocktail name">
+          </div>
 
-      <div class="mb-3">
+          <div class="mb-3 form-check text-center">
+            <input type="checkbox" class="form-check-input" id="iba_status_box" name="query_iba_status" value="1">
+            <label class="form-check-label" for="iba_status">Check box if IBA Official Recipe</label>
+          </div>
+
+          <div class="form-group mb-3">
+            <label for="preparation_box">Preparation</label>
+            <textarea class="form-control" id="preparation_box" name="query_preparation" rows="6" placeholder="Preparation, ie: Stir ingredients with ice. Strain into cocktail glass." aria-label="Preparation"></textarea>
+          </div>
           
-        <div class="mb-3">
-          <label for="name_box">Cocktail Name</label>
-          <input type="text" id="name_box" name="query_name" class="form-control" placeholder="Cocktail Name, ie: Manhattan" aria-label="Cocktail name">
-        </div>
+          <div class="input-group text-center mb-3">
+            <button class="btn btn-outline-success btn-block">
+              Create Recipe
+            </button>
+          </div>
 
-        <div class="mb-3 form-check">
-          <input type="checkbox" class="form-check-input" id="iba_status_box" name="query_iba_status" value="1">
-          <label class="form-check-label" for="iba_status">Check box if IBA Official Recipe</label>
-        </div>
+      </form>
+    </div>
 
-        <div class="form-group mb-3">
-          <label for="preparation_box">Preparation</label>
-          <textarea class="form-control" id="preparation_box" name="query_preparation" rows="6" placeholder="Preparation, ie: Stir ingredients with ice. Strain into cocktail glass." aria-label="Preparation"></textarea>
-        </div>
-        
-        <div class="text-center mb-3">
-          <button class="btn btn-outline-success">
-            Create Recipe
-          </button>
-        </div>
+</div>
 
-      </div>
-
-    </form>
-
-  </div>
-
-  <hr>  
+<hr>  

@@ -1,23 +1,19 @@
 <div>
+
   <h1 class="text-center">
     My Bar
   </h1>
-</div>
 
-<hr>
-<br>
+  <hr>
+  <br>
 
-<div>
+  <h4 class="text-center">
+    Add a new bottle
+  </h4>
 
-  <div class="text-center">
-    <h4>
-      Add a new bottle
-    </h4>
-  </div>
-
-  <div class="col-11 container justify-content-center">
+  <div class="col-9 container justify-content-center">
     <form action="/insert_bottle" method="post">
-      <div class="input-group col-12">
+      <div class="input-group mb-3 col-12">
         <select class="form-select col-9" id="alcohol_id_box" name="query_alcohol_id" aria-label="Alcohol selection">
           <option selected>Select an alcohol...</option>
           <% Alcohol.all.order(:name).each do |a_alcohol|%>
@@ -29,64 +25,60 @@
         <button class="btn btn-outline-secondary col-3">Add Bottle</button>
       </div>
     </form>
-    
   </div>
-  
-</div>
 
-<hr>
-
-<br>
+  <hr>
+  <br>
 
   <div class="text-center">
     <p>
       Is the alcohol type you need not listed?
     </p>
-
-    <div>
-      <form action="/create_alcohol_form">
-        <div class="input-group mb-3 col-12">
-          <input type="hidden" id="source_url" name="query_source_url" value="<%= @path %>">
-          <button class="btn btn-outline-secondary col-3">Add New Alcohol</button>
-        </div>
-      </form>
-    </div>
   </div>
 
-<hr>
+  <div class="col-6 container justify-content-center">
+    <form action="/create_alcohol_form">
+      <div class="input-group text-center mb-3">
+        <input type="hidden" id="source_url" name="query_source_url" value="<%= @path %>">
+        <button class="btn btn-outline-secondary btn-block">Add New Alcohol</button>
+      </div>
+    </form>
+  </div>
+  
+  <hr>
 
-<div>
+  <div>
+    <table class="table col-11 container justify-content-center">
+      <thead class="thead-dark">    
 
-  <table class="table col-11 container justify-content-center">
-    <thead class="thead-dark">    
+        <th class="align-middle">
+          Alcohol
+        </th>
 
-      <th class="align-middle">
-        Alcohol
-      </th>
+        <th>
+        </th>
 
-      <th>
-      </th>
+      </tr>
 
-    </tr>
+      <% @list_of_bottles.each do |a_bottle| %>
+      <tr>   
 
-    <% @list_of_bottles.each do |a_bottle| %>
-    <tr>   
+        <td class="align-middle">
+          <%= a_bottle.alcohol.name.capitalize %></a>
+        </td>
 
-      <td class="align-middle">
-        <%= a_bottle.alcohol.name.capitalize %></a>
-      </td>
+        <td class="text-right">
+          <form action="/delete_bottle/<%= a_bottle.id %>">
+            <button class="btn btn-outline-danger btn-sm">
+              Remove bottle
+            </button>
+          </form>
+        </td>
 
-      <td class="text-right">
-        <form action="/delete_bottle/<%= a_bottle.id %>">
-          <button class="btn btn-outline-danger btn-sm">
-            Remove bottle
-          </button>
-        </form>
-      </td>
-
-    </tr>
-    <% end %>
-  </table>
+      </tr>
+      <% end %>
+    </table>
+  </div>
 
 </div>
 

@@ -63,7 +63,7 @@ class NaIngredientsController < ApplicationController
 
     @recipe_id = params.fetch("query_recipe_id")
 
-    the_id = params.fetch("query_na_ingredient_id")
+    the_id = params.fetch("path_id")
 
     the_na_ingredient = NaIngredient.where({ :id => the_id }).at(0)
 

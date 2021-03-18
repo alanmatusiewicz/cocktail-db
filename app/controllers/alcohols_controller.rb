@@ -54,6 +54,14 @@ class AlcoholsController < ApplicationController
 
   def create
 
+    if params.has_key?(:query_source_url) == false
+      @source_url = "/bottles"
+
+    else
+      @source_url = params.fetch("query_source_url")
+
+    end
+    
     the_alcohol = Alcohol.new
     the_alcohol.name = params.fetch("query_name").downcase
 
@@ -76,7 +84,7 @@ class AlcoholsController < ApplicationController
 
     the_id = params.fetch("path_id")
     the_alcohol = Alcohol.where({ :id => the_id }).at(0)
-    the_alcohol.name = params.fetch("query_name")
+    the_alcohol.name = params.fetch("query_name").downcase
     the_alcohol.description = params.fetch("query_description")
 
     if the_alcohol.valid?

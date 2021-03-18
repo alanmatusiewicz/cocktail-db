@@ -1,137 +1,137 @@
 <div>
-  <div>
-    <% if @missing_count > 0%>
+  <% if @missing_count > 0%>
+  
+    <div class="alert alert-warning alert-dismissible fade show text-center" role="alert">
+      <strong>Oh no!</strong> Your bar is missing <%= @missing_count %> alcoholic 
+        <%if @missing_count == 1 %>
+          ingredient 
+        <% else %>
+          ingredients 
+        <% end %>
+      for this cocktail!
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+  <% else %>
+
+    <div class="alert alert-success alert-dismissible fade show text-center" role="alert">
+      <strong>Hooray!</strong> Your bar has all the alcoholic ingredients for this cocktail!
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  <% end %>
+  
+  <h1 class="text-center">
+    <%= @the_recipe.name %>
+  </h1>
     
-      <div class="alert alert-warning alert-dismissible fade show text-center" role="alert">
-        <strong>Oh no!</strong> Your bar is missing <%= @missing_count %> alcoholic 
-          <%if @missing_count == 1 %>
-            ingredient 
-          <% else %>
-            ingredients 
-          <% end %>
-        for this cocktail!
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
+  <% if @the_recipe.iba_status == true %>
+    <div class="text-center">
+      <i class="fas fa-award h1" style="color: goldenrod;"></i>
+      <h5>
+        IBA Official Cocktail
+      </h5>
+    </div>
+  <% end %>
 
-    <% else %>
+  <hr>
 
-      <div class="alert alert-success alert-dismissible fade show text-center" role="alert">
-        <strong>Hooray!</strong> Your bar has all the alcoholic ingredients for this cocktail!
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-    <% end %>
-    
-    <h1 class="text-center">
-      <%= @the_recipe.name %>
-    </h1>
+  <% matching_records = SavedRecipe.where({ :user_id => @current_user.id, :recipe_id => @the_recipe.id }) %>
+  <% saved_recipe = matching_records.first %>
 
-    <%= @query_missing_count %>
-      
-    <% if @the_recipe.iba_status == true %>
-      <div class="text-center">
-        <i class="fas fa-award h1" style="color: goldenrod;"></i>
-        <h5>
-          IBA Official Cocktail
-        </h5>
-      </div>
-    <% end %>
-
-    <hr>
-
-    <% matching_records = SavedRecipe.where({ :user_id => @current_user.id, :recipe_id => @the_recipe.id }) %>
-    <% saved_recipe = matching_records.first %>
-
-    <div class="text-center mb-3">
-      <% if saved_recipe != nil %>
-        <form action="/delete_saved_recipe/<%= @the_recipe.id %>">
+  <div class="col-6 container justify-content-center">
+    <% if saved_recipe != nil %>
+      <form action="/delete_saved_recipe/<%= @the_recipe.id %>">
+        <div class="input-group text-center mb-3">
           <input type="hidden" id="source_url" name="query_source_url" value="<%= @path %>">
           <input type="hidden" name="query_saved_recipe_id" value="<%= saved_recipe.id %>">
-          <button class="btn btn-outline-danger btn-sm">
+          <button class="btn btn-outline-danger btn-sm btn-block">
             Unsave
           </button>
-        </form>
-      <% else %>
-        <form action="/insert_saved_recipe" method="post">
+        </div>
+      </form>
+    <% else %>
+      <form action="/insert_saved_recipe" method="post">
+        <div class="input-group text-center mb-3">
           <input type="hidden" id="source_url" name="query_source_url" value="<%= @path %>">
           <input name="query_recipe_id" type="hidden" value="<%= @the_recipe.id %>">
-          <button class="btn btn-outline-secondary btn-sm">
+          <button class="btn btn-outline-secondary btn-sm btn-block">
             Save
           </button>
-        </form>
-      <% end %>
-    </div>
-
-    <div class="text-center mb-3">
-      <% if @current_user.id == @the_recipe.user.id %>
-      
-          <form action="/modify_recipe_form/<%= @the_recipe.id %>">
-            <button class="btn btn-outline-secondary btn-sm">
-              Edit recipe
-            </button>
-          </form>
-          
-      <% end %>
-    </div>
-
-    <div>
-      <div class="text-center mb-3">
-        <form action="/recipes">
-          <button class="btn btn-outline-secondary btn-sm">
-            Back to recipes
-          </button>
-        </form>
-      </div>
-    </div>
-
-    <hr>
-
-    <div class="container d-flex col-6 justify-content-center">
-      <dl>
-
-        <dt>
-          Ingredients
-        </dt>
-
-        <dd>
-          <ul>
-            <% @the_recipe.ingredients.order({ :measure_ml => :desc }).each do |a_ingredient| %>
-              <li>
-                <%= a_ingredient.summary.capitalize %>
-                <% if @bar.exclude?(a_ingredient.alcohol_id) %>
-                  <!-- <i class="fas fa-exclamation" style="color: gold;"></i> -->
-                  <i class="fas fa-exclamation-circle" style="color: gold;"></i>
-                <% end %>
-              </li>
-            <% end %>
-
-            <% @the_recipe.na_ingredients.order({ :name => :desc }).each do |a_na_ingredient| %>
-              <li>
-                <%= a_na_ingredient.summary.capitalize %>
-              </li>
-            <% end %>
-          </ul>
-        </dd>
-
-        <dt>
-          Preparation
-        </dt>
-        <dd>
-          <%= @the_recipe.preparation %>
-        </dd>
-
-        <dt>
-        </dt>
-        <br>
-        <dd>
-          Updated <%= time_ago_in_words(@the_recipe.updated_at) %> ago
-        </dd>
-      </dl>
-    </div>
+          </div>
+      </form>
+    <% end %>
   </div>
+
+  <div class="col-6 container justify-content-center">
+    <% if @current_user.id == @the_recipe.user.id %>
+      <form action="/modify_recipe_form/<%= @the_recipe.id %>">
+        <div class="input-group text-center mb-3">
+          <button class="btn btn-outline-secondary btn-sm btn-block">
+            Edit recipe
+          </button>
+        </div>
+      </form>        
+    <% end %>
+  </div>
+
+  <div class="col-6 container justify-content-center">
+    <form action="/recipes">
+      <div class="input-group text-center mb-3">
+        <button class="btn btn-outline-secondary btn-sm btn-block">
+          Back to recipes
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <hr>
+
+  <div class="col-6 container justify-content-center">
+    <dl>
+
+      <dt>
+        Ingredients
+      </dt>
+
+      <dd>
+        <ul>
+          <% @the_recipe.ingredients.order({ :measure_ml => :desc }).each do |a_ingredient| %>
+            <li>
+              <%= a_ingredient.summary.capitalize %>
+              <% if @bar.exclude?(a_ingredient.alcohol_id) %>
+                <i class="fas fa-exclamation-circle" style="color: gold;"></i>
+              <% end %>
+            </li>
+          <% end %>
+
+          <% @the_recipe.na_ingredients.order({ :name => :desc }).each do |a_na_ingredient| %>
+            <li>
+              <%= a_na_ingredient.summary.capitalize %>
+            </li>
+          <% end %>
+        </ul>
+      </dd>
+
+      <dt>
+        Preparation
+      </dt>
+      <dd>
+        <%= @the_recipe.preparation %>
+      </dd>
+
+      <dt>
+      </dt>
+      <br>
+      <dd class="text-center">
+        Updated <%= time_ago_in_words(@the_recipe.updated_at) %> ago
+      </dd>
+    </dl>
+  </div>
+
 </div>
 
 <hr>

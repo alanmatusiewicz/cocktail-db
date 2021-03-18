@@ -7,7 +7,9 @@ class UserAuthenticationController < ApplicationController
 # ----------------------------------------------------------------------------------------------------------
 
   def sign_in_form
+
     render({ :template => "user_authentication/sign_in.html.erb" })
+
   end
 
 
@@ -15,6 +17,7 @@ class UserAuthenticationController < ApplicationController
 # ----------------------------------------------------------------------------------------------------------
 
   def create_cookie
+
     user = User.where({ :email => params.fetch("query_email").downcase }).first
     
     the_supplied_password = params.fetch("query_password")
@@ -24,15 +27,18 @@ class UserAuthenticationController < ApplicationController
     
       if are_they_legit == false
         redirect_to("/user_sign_in", { :alert => "Incorrect password." })
+
       else
-        session[:user_id] = user.id
-      
+        session[:user_id] = user.id      
         redirect_to("/", { :notice => "Signed in successfully." })
-        # Probably update sign in redirect to bar menu once it's functional
+        
       end
+
     else
       redirect_to("/user_sign_in", { :alert => "No user with that email address." })
+
     end
+
   end
 
 
@@ -40,9 +46,11 @@ class UserAuthenticationController < ApplicationController
 # ----------------------------------------------------------------------------------------------------------
 
   def destroy_cookies
+
     reset_session
 
     redirect_to("/", { :notice => "Signed out successfully." })
+
   end
 
 
@@ -50,7 +58,9 @@ class UserAuthenticationController < ApplicationController
 # ----------------------------------------------------------------------------------------------------------
 
   def sign_up_form
+
     render({ :template => "user_authentication/sign_up.html.erb" })
+
   end
 
 
@@ -58,7 +68,9 @@ class UserAuthenticationController < ApplicationController
 # ----------------------------------------------------------------------------------------------------------
 
   def create
+
     @user = User.new
+
     @user.email = params.fetch("query_email").downcase
     @user.password = params.fetch("query_password")
     @user.password_confirmation = params.fetch("query_password_confirmation")
@@ -67,11 +79,13 @@ class UserAuthenticationController < ApplicationController
 
     if save_status == true
       session[:user_id] = @user.id
-   
-      redirect_to("/", { :notice => "User account created successfully."})
+         redirect_to("/", { :notice => "User account created successfully."})
+
     else
       redirect_to("/user_sign_up", { :alert => "#{@user.errors.full_messages.to_sentence}"})
+
     end
+
   end
 
 
@@ -79,7 +93,9 @@ class UserAuthenticationController < ApplicationController
 # ----------------------------------------------------------------------------------------------------------
     
   def edit_profile_form
+
     render({ :template => "user_authentication/edit_profile.html.erb" })
+
   end
 
 
@@ -87,18 +103,21 @@ class UserAuthenticationController < ApplicationController
 # ----------------------------------------------------------------------------------------------------------
 
   def update
+
     @user = @current_user
-    @user.email = params.fetch("query_email")
+    @user.email = params.fetch("query_email").downcase
     @user.password = params.fetch("query_password")
     @user.password_confirmation = params.fetch("query_password_confirmation")
     
     if @user.valid?
       @user.save
-
       redirect_to("/", { :notice => "User account updated successfully."})
+
     else
       render({ :template => "user_authentication/edit_profile_with_errors.html.erb" })
+
     end
+
   end
 
 
@@ -106,10 +125,13 @@ class UserAuthenticationController < ApplicationController
 # ----------------------------------------------------------------------------------------------------------
 
   def destroy
+
     @current_user.destroy
+
     reset_session
     
     redirect_to("/", { :notice => "User account cancelled" })
+    
   end
  
 end

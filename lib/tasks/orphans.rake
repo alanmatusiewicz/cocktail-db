@@ -1,4 +1,4 @@
-desc "Find and delete recipes with no alcoholic ingredients and created more than 15 minutes ago."
+desc "Find and delete recipes with no alcoholic ingredients and updated more than 15 minutes ago."
 task({ :delete_orphans => :environment }) do
 
   orphans = Array.new
@@ -15,9 +15,9 @@ task({ :delete_orphans => :environment }) do
 
   if orphans != 0
   
-    orphans_to_delete = Recipe.where({ :id => orphans }).where("created_at < ?", 15.minutes.ago)
+    orphans_to_delete = Recipe.where({ :id => orphans }).where("updated_at < ?", 15.minutes.ago)
 
-    p "#{orphans_to_delete.count} of #{orphans.count} created more than 15 minutes ago."
+    p "#{orphans_to_delete.count} of #{orphans.count} updated more than 15 minutes ago."
     p "#{orphans_to_delete}"
 
     if orphans_to_delete != 0

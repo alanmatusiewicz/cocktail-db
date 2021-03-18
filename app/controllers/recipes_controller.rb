@@ -233,6 +233,9 @@ class RecipesController < ApplicationController
 
     @the_recipe = Recipe.where({ :id => the_id }).at(0)
 
+    @ingredient_count = @the_recipe.ingredients.count
+    @na_ingredient_count = @the_recipe.na_ingredients.count
+
     if @the_recipe.iba_status == true
       @iba_status = "checked"
 
