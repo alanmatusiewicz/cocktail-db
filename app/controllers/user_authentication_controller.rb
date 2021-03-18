@@ -15,7 +15,7 @@ class UserAuthenticationController < ApplicationController
 # ----------------------------------------------------------------------------------------------------------
 
   def create_cookie
-    user = User.where({ :email => params.fetch("query_email") }).first
+    user = User.where({ :email => params.fetch("query_email").downcase }).first
     
     the_supplied_password = params.fetch("query_password")
     
@@ -59,7 +59,7 @@ class UserAuthenticationController < ApplicationController
 
   def create
     @user = User.new
-    @user.email = params.fetch("query_email")
+    @user.email = params.fetch("query_email").downcase
     @user.password = params.fetch("query_password")
     @user.password_confirmation = params.fetch("query_password_confirmation")
 
@@ -70,7 +70,7 @@ class UserAuthenticationController < ApplicationController
    
       redirect_to("/", { :notice => "User account created successfully."})
     else
-      redirect_to("/user_sign_up", { :alert => "User account failed to create successfully."})
+      redirect_to("/user_sign_up", { :alert => "#{@user.errors.full_messages.to_sentence}"})
     end
   end
 
