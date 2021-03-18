@@ -16,7 +16,7 @@
       <div class="input-group mb-3 col-12">
         <select class="form-select col-9" id="alcohol_id_box" name="query_alcohol_id" aria-label="Alcohol selection">
           <option selected>Select an alcohol...</option>
-          <% Alcohol.all.order(:name).each do |a_alcohol|%>
+          <% Alcohol.all.order({ :name => :asc }).each do |a_alcohol|%>
             <option value=<%= a_alcohol.id %>>
               <%= a_alcohol.name.capitalize %>
             </option>
