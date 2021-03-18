@@ -69,7 +69,7 @@
                   </div>
 
                   <div class="mb-3 form-check">
-                    <input type="checkbox" class="form-check-input" id="iba_status_box" name="query_iba_status" value="1" <%= "checked" if @the_recipe.iba_status %>>
+                    <input type="checkbox" class="form-check-input" id="iba_status_box" name="query_iba_status" value="1" <%= @iba_status %>>
                     <label class="form-check-label" for="iba_status">Check box if IBA Official Recipe</label>
                   </div>
 
@@ -179,9 +179,14 @@
                 Is the alcohol type you need not listed?
               </p>
 
-              <p>
-                Add it from <a href="/bar/bottles">your Bottles page</a> and return to or reload this page. 
-              </p>
+              <div>
+                <form action="/create_alcohol_form">
+                  <div class="input-group mb-3 col-12">
+                    <input type="hidden" id="source_url" name="query_source_url" value="<%= @path %>">
+                    <button class="btn btn-outline-secondary col-3">Add New Alcohol</button>
+                  </div>
+                </form>
+              </div>
             </div>
 
           </div>

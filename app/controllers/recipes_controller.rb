@@ -1,6 +1,6 @@
 class RecipesController < ApplicationController
   before_action(:get_inventory)
-  before_action(:bar_check, { :only => [:index, :random_bar] })
+  before_action(:bar_check, { :only => [:index, :random_bar, :show] })
 
 
   
@@ -108,11 +108,33 @@ class RecipesController < ApplicationController
   
 # ----------------------------------------------------------------------------------------------------------
 
+  def create_form
+    if params.has_key?(:query_source_url) == false
+      @source_url = "/saved_recipes"
+    else
+      @source_url = params.fetch("query_source_url")
+    end
+    
+    render({ :template => "/recipes/create_form.html.erb" })
+    
+  end
+
+
+# ----------------------------------------------------------------------------------------------------------
+
   def create
-    @source_url = params.fetch("query_source_url")
+    # @source_url = params.fetch("query_source_url")
+
+    if params.has_key?(:query_iba_status) == false
+      @iba_status = false
+    else
+      @iba_status = params.fetch("query_iba_status")
+    end
 
     the_recipe = Recipe.new
     the_recipe.name = params.fetch("query_name")
+    the_recipe.preparation = params.fetch("query_preparation")
+    the_recipe.iba_status = @iba_status
     the_recipe.user_id = @current_user.id
 
     if the_recipe.valid?
@@ -124,7 +146,7 @@ class RecipesController < ApplicationController
   end
 
 
-  
+    
 # ----------------------------------------------------------------------------------------------------------
 
   def update
@@ -156,6 +178,10 @@ class RecipesController < ApplicationController
   def update_form
     the_id = params.fetch("path_id")
     @the_recipe = Recipe.where({ :id => the_id }).at(0)
+
+    if @the_recipe.iba_status == true
+      @iba_status = "checked"
+    end
     
     render({ :template => "recipes/update_form.html.erb" })
   end

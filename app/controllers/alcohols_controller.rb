@@ -17,15 +17,26 @@ class AlcoholsController < ApplicationController
     render({ :template => "alcohols/show.html.erb" })
   end
 
+  def create_form
+    if params.has_key?(:query_source_url) == false
+      @source_url = "/bottles"
+    else
+      @source_url = params.fetch("query_source_url")
+    end
+    
+    render({ :template => "alcohols/create_form.html.erb" })
+    
+  end
+
   def create
     the_alcohol = Alcohol.new
     the_alcohol.name = params.fetch("query_name").downcase
 
     if the_alcohol.valid?
       the_alcohol.save
-      redirect_to("/bar/bottles", { :notice => "Alcohol created successfully." })
+      redirect_to("#{@source_url}", { :notice => "Alcohol created successfully." })
     else
-      redirect_to("/bar/bottles", { :alert => "#{the_alcohol.errors.full_messages.to_sentence}" })
+      redirect_to("#{@source_url}", { :alert => "#{the_alcohol.errors.full_messages.to_sentence}" })
     end
   end
 

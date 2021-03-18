@@ -5,10 +5,10 @@
 </div>
 
 <hr>
-
 <br>
 
-<div class="container justify-content-center">
+<div>
+
   <div class="text-center">
     <h4>
       Add a new bottle
@@ -31,24 +31,27 @@
     </form>
     
   </div>
+  
+</div>
 
 <hr>
 
-  <div class="mb-3 col-12">
-    <h4 class="text-center">
-      Add new alcohol type
-    </h4>
+<br>
 
-    <form action="/insert_alcohol" method="post">
-      <div class="input-group mb-3 col-12">
-        <input type="text" id="name_box" name="query_name" class="form-control col-9" placeholder="Alcohol type, ie: whiskey, not Jack Daniels" aria-label="Alcohol type, ie: whiskey" aria-describedby="button-addon2">
-        <button class="btn btn-outline-secondary col-3">Add Alcohol</button>
-      </div>
-    </form>
+  <div class="text-center">
+    <p>
+      Is the alcohol type you need not listed?
+    </p>
 
+    <div>
+      <form action="/create_alcohol_form">
+        <div class="input-group mb-3 col-12">
+          <input type="hidden" id="source_url" name="query_source_url" value="<%= @path %>">
+          <button class="btn btn-outline-secondary col-3">Add New Alcohol</button>
+        </div>
+      </form>
+    </div>
   </div>
-
-</div>
 
 <hr>
 

@@ -101,6 +101,10 @@
             <% @the_recipe.ingredients.order({ :measure_ml => :desc }).each do |a_ingredient| %>
               <li>
                 <%= a_ingredient.summary.capitalize %>
+                <% if @bar.exclude?(a_ingredient.alcohol_id) %>
+                  <!-- <i class="fas fa-exclamation" style="color: gold;"></i> -->
+                  <i class="fas fa-exclamation-circle" style="color: gold;"></i>
+                <% end %>
               </li>
             <% end %>
 

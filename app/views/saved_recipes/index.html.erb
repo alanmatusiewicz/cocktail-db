@@ -100,7 +100,7 @@
 <hr>
 <br>
 
-<div>
+<div class="justify-content-center">
   <div>
     <h2 class="text-center">
       Created Recipes
@@ -108,15 +108,11 @@
   </div>
 
   <div>
-    <h4 class="text-center">
-      Create a new recipe
-    </h4>
 
-    <form action="/insert_recipe" method="post">
+    <form action="/create_recipe_form">
       <div class="input-group mb-3 col-12">
         <input type="hidden" id="source_url" name="query_source_url" value="<%= @path %>">
-        <input type="text" id="name_box" name="query_name" class="form-control col-9" placeholder="Cocktail name, ie: Singapore Sling . . ." aria-label="Cocktail name, ie: Singapore Sling . . ." aria-describedby="button-addon2">
-        <button class="btn btn-outline-secondary col-3">Create Recipe</button>
+        <button class="btn btn-outline-secondary col-3">Create a New Recipe</button>
       </div>
     </form>
 

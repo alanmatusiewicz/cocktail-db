@@ -24,6 +24,7 @@ Rails.application.routes.draw do
   # Routes for the Alcohol resource:
 
   # CREATE
+  get("/create_alcohol_form", { :controller => "alcohols", :action => "create_form" })
   post("/insert_alcohol", { :controller => "alcohols", :action => "create" })
           
   # READ
@@ -71,7 +72,7 @@ Rails.application.routes.draw do
   
   # UPDATE
   
-  post("/modify_bottle/:path_id", { :controller => "bottles", :action => "update" })
+  # post("/modify_bottle/:path_id", { :controller => "bottles", :action => "update" })
   
   # DELETE
   get("/delete_bottle/:path_id", { :controller => "bottles", :action => "destroy" })
@@ -90,7 +91,7 @@ Rails.application.routes.draw do
   
   # UPDATE
   
-  post("/modify_saved_recipe/:path_id", { :controller => "saved_recipes", :action => "update" })
+  # post("/modify_saved_recipe/:path_id", { :controller => "saved_recipes", :action => "update" })
   
   # DELETE
   get("/delete_saved_recipe/:path_id", { :controller => "saved_recipes", :action => "destroy" })
@@ -100,6 +101,7 @@ Rails.application.routes.draw do
   # Routes for the Recipe resource:
 
   # CREATE
+  get("/create_recipe_form", { :controller => "recipes", :action => "create_form" })
   post("/insert_recipe", { :controller => "recipes", :action => "create" })
          
   # READ
@@ -109,13 +111,11 @@ Rails.application.routes.draw do
   get("/recipes/:path_id", { :controller => "recipes", :action => "show" })
 
   get("/random", { :controller => "recipes", :action => "random" })
-  
   get("/random/bar", { :controller => "recipes", :action => "random_bar" })
   
   # UPDATE
 
   get("/modify_recipe_form/:path_id", { :controller => "recipes", :action => "update_form" })
-  
   post("/modify_recipe/:path_id", { :controller => "recipes", :action => "update" })
   
   # DELETE
