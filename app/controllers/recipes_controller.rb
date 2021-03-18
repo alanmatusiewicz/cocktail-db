@@ -58,29 +58,31 @@ class RecipesController < ApplicationController
     if params.has_key?(:path_id)
       @query_missing_count = params.fetch("path_id")
       
-      if @query_missing_count == "0"
-        @test = "zero"
+      if @bar.length == 0
+        @empty_bar = "true"
+      elsif @query_missing_count == "0"
         @matching_recipes = Recipe.where({ :id => @zero })
       elsif @query_missing_count == "1"
         @matching_recipes = Recipe.where({ :id => @one })
-        @test = "one"
       elsif @query_missing_count == "2"
         @matching_recipes = Recipe.where({ :id => @two })
-        @test = "two"
       elsif @query_missing_count == "3"
         @matching_recipes = Recipe.where({ :id => @three })
-        @test = "three"
       else
         @matching_recipes = Recipe.all
-        @test = "all"
       end
     else
       @matching_recipes = Recipe.all
     end
 
-    @list_of_recipes = @matching_recipes.order({ :name => :asc })
+    if @empty_bar == "true"
+      redirect_to("/bottles", { :alert => "You need to add bottles before you can view your bar menu!"})
+    else
+      @list_of_recipes = @matching_recipes.order({ :name => :asc })
 
-    render({ :template => "recipes/index.html.erb" })
+      render({ :template => "recipes/index.html.erb" })
+    end
+
   end
 
 
@@ -118,6 +120,7 @@ class RecipesController < ApplicationController
     render({ :template => "/recipes/create_form.html.erb" })
     
   end
+
 
 
 # ----------------------------------------------------------------------------------------------------------
@@ -214,9 +217,15 @@ class RecipesController < ApplicationController
 # ----------------------------------------------------------------------------------------------------------
 
   def random_bar
+
     the_id = @zero.sample
 
-    redirect_to("/recipes/#{the_id}")
+    if @bar.length == 0
+      redirect_to("/bottles", { :alert => "You need to add bottles before you can view a random recipe from your bar menu!"})
+    else
+      redirect_to("/recipes/#{the_id}")
+    end
+
   end
 
 
