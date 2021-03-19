@@ -72,38 +72,10 @@ class RecipesController < ApplicationController
 
   def index
 
-    if params.has_key?(:path_id)
-      @query_missing_count = params.fetch("path_id")
-      
-      if @bar.length == 0
-        @empty_bar = "true"
-
-      elsif @query_missing_count == "0"
-        @matching_recipes = Recipe.where({ :id => @zero })
-
-      elsif @query_missing_count == "1"
-        @matching_recipes = Recipe.where({ :id => @one })
-
-      elsif @query_missing_count == "2"
-        @matching_recipes = Recipe.where({ :id => @two })
-
-      elsif @query_missing_count == "3"
-        @matching_recipes = Recipe.where({ :id => @three })
-
-      else
-        @matching_recipes = Recipe.all
-
-      end
-
-    else
-      @matching_recipes = Recipe.all
-
-    end
-
     if params.has_key?("query_name")
       @query_name = params.fetch("query_name")
 
-      @matching_recipes_arel = @matching_recipes.arel_table
+      @matching_recipes_arel = Recipe.arel_table
 
       @matching_recipes = Recipe.where(@matching_recipes_arel[:name].matches("%#{@query_name}%"))
       # @matching_recipes = @matching_recipes_arel.where("name like ?", "%#{@query_name}%")
@@ -112,7 +84,40 @@ class RecipesController < ApplicationController
         @no_results = true
       end
 
+    else
+      @matching_recipes = Recipe.all
+
     end
+
+    if params.has_key?(:path_id)
+      @query_missing_count = params.fetch("path_id")
+      
+      if @bar.length == 0
+        @empty_bar = "true"
+
+      elsif @query_missing_count == "0"
+        @matching_recipes = @matching_recipes.where({ :id => @zero })
+
+      elsif @query_missing_count == "1"
+        @matching_recipes = @matching_recipes.where({ :id => @one })
+
+      elsif @query_missing_count == "2"
+        @matching_recipes = @matching_recipes.where({ :id => @two })
+
+      elsif @query_missing_count == "3"
+        @matching_recipes = @matching_recipes.where({ :id => @three })
+
+      # else
+      #   @matching_recipes = Recipe.all
+
+      end
+
+    # else
+    #   @matching_recipes = Recipe.all
+
+    end
+
+    
 
     if @empty_bar == "true"
       redirect_to("/bottles", { :alert => "You need to add bottles before you can view your bar menu!"})
