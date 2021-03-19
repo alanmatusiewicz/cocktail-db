@@ -74,9 +74,7 @@ class RecipesController < ApplicationController
 
     if params.has_key?("query_name")
       @query_name = params.fetch("query_name")
-
       @matching_recipes_arel = Recipe.arel_table
-
       @matching_recipes = Recipe.where(@matching_recipes_arel[:name].matches("%#{@query_name}%"))
    
     else
