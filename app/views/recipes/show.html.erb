@@ -1,6 +1,7 @@
-<div>
+<!-- Missing Ingredient Alert Banner -->
+
   <% if @missing_count > 0%>
-  
+
     <div class="alert alert-warning alert-dismissible fade show text-center" role="alert">
       Your bar is only missing <%= @missing_count %> alcoholic 
         <%if @missing_count == 1 %>
@@ -9,21 +10,28 @@
           ingredients 
         <% end %>
       for this cocktail!
+
       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
       </button>
+
     </div>
 
   <% else %>
 
     <div class="alert alert-success alert-dismissible fade show text-center" role="alert">
       <strong>Hooray!</strong> Your bar has all the alcoholic ingredients for this cocktail!
+
       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
       </button>
+      
     </div>
   <% end %>
-  
+
+
+<!-- Recipe Name and IBA Status -->
+
   <h1 class="text-center">
     <%= @the_recipe.name %>
   </h1>
@@ -39,56 +47,78 @@
 
   <hr>
 
-  <% matching_records = SavedRecipe.where({ :user_id => @current_user.id, :recipe_id => @the_recipe.id }) %>
-  <% saved_recipe = matching_records.first %>
 
-  <div class="col-6 container justify-content-center">
-    <% if saved_recipe != nil %>
-      <form action="/delete_saved_recipe/<%= @the_recipe.id %>">
-        <div class="input-group text-center mb-3">
-          <input type="hidden" id="source_url" name="query_source_url" value="<%= @path %>">
-          <input type="hidden" name="query_saved_recipe_id" value="<%= saved_recipe.id %>">
-          <button class="btn btn-outline-danger btn-sm btn-block">
-            Unsave
-          </button>
-        </div>
-      </form>
-    <% else %>
-      <form action="/insert_saved_recipe" method="post">
-        <div class="input-group text-center mb-3">
-          <input type="hidden" id="source_url" name="query_source_url" value="<%= @path %>">
-          <input name="query_recipe_id" type="hidden" value="<%= @the_recipe.id %>">
-          <button class="btn btn-outline-secondary btn-sm btn-block">
-            Save
-          </button>
+<!-- Recipe Buttons -->
+
+  <!-- Save / Unsave -->
+
+    <% matching_records = SavedRecipe.where({ :user_id => @current_user.id, :recipe_id => @the_recipe.id }) %>
+    <% saved_recipe = matching_records.first %>
+
+    <div class="col-6 container justify-content-center">
+      <% if saved_recipe != nil %>
+        <form action="/delete_saved_recipe/<%= @the_recipe.id %>">
+          <div class="input-group text-center mb-3">
+
+            <input type="hidden" id="source_url" name="query_source_url" value="<%= @path %>">
+            <input type="hidden" name="query_saved_recipe_id" value="<%= saved_recipe.id %>">
+
+            <button class="btn btn-outline-danger btn-sm btn-block">
+              Unsave
+            </button>
+
           </div>
-      </form>
-    <% end %>
-  </div>
+        </form>
+      <% else %>
+        <form action="/insert_saved_recipe" method="post">
+          <div class="input-group text-center mb-3">
 
-  <div class="col-6 container justify-content-center">
-    <% if @current_user.id == @the_recipe.user.id %>
-      <form action="/modify_recipe_form/<%= @the_recipe.id %>">
+            <input type="hidden" id="source_url" name="query_source_url" value="<%= @path %>">
+            <input name="query_recipe_id" type="hidden" value="<%= @the_recipe.id %>">
+
+            <button class="btn btn-outline-secondary btn-sm btn-block">
+              Save
+            </button>
+
+          </div>
+        </form>
+      <% end %>
+    </div>
+
+  <!-- Edit Button if Author -->
+  
+    <div class="col-6 container justify-content-center">
+      <% if @current_user.id == @the_recipe.user.id %>
+        <form action="/modify_recipe_form/<%= @the_recipe.id %>">
+          <div class="input-group text-center mb-3">
+
+            <button class="btn btn-outline-secondary btn-sm btn-block">
+              Edit recipe
+            </button>
+
+          </div>
+        </form>        
+      <% end %>
+    </div>
+
+  <!-- Back -->
+
+    <div class="col-6 container justify-content-center">
+      <form action="/recipes">
         <div class="input-group text-center mb-3">
-          <button class="btn btn-outline-secondary btn-sm btn-block">
-            Edit recipe
-          </button>
-        </div>
-      </form>        
-    <% end %>
-  </div>
 
-  <div class="col-6 container justify-content-center">
-    <form action="/recipes">
-      <div class="input-group text-center mb-3">
-        <button class="btn btn-outline-secondary btn-sm btn-block">
-          Back to recipes
-        </button>
-      </div>
-    </form>
-  </div>
+          <button class="btn btn-outline-secondary btn-sm btn-block">
+            Back to recipes
+          </button>
+          
+        </div>
+      </form>
+    </div>
 
   <hr>
+
+
+<!-- Recipe Details -->
 
   <div class="col-6 container justify-content-center">
     <dl>
@@ -131,7 +161,5 @@
       </dd>
     </dl>
   </div>
-
-</div>
 
 <hr>

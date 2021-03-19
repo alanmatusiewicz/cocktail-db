@@ -4,117 +4,140 @@
 
 <hr>
 
-<div class="col-6 container justify-content-center">    
-  <form action="/create_recipe_form">
-    <div class="input-group text-center mb-3">
-      <input type="hidden" id="source_url" name="query_source_url" value="<%= @path %>">
-      <button class="btn btn-outline-secondary btn-block">Create a New Recipe</button>
-    </div>
-  </form>  
-</div>
 
-<hr>
-<br>
+<!-- New Recipe Button -->
 
-<h4 class="text-center">
-  Search by cocktail name
-</h4>
+  <div class="col-6 container justify-content-center">    
+    <form action="/create_recipe_form">
+      <div class="input-group text-center mb-3">
 
-<br>
+        <input type="hidden" id="source_url" name="query_source_url" value="<%= @path %>">
 
-<div class="col-9 container justify-content-center">
-  <form action="<%= @path %>">
-    <div class="input-group mb-3 col-12">
-      <input type="text" id="name_box" name="query_name" class="form-control col-9" placeholder="Cocktail name, ie: Manhattan" aria-label="cocktail_name" aria-describedby="button-addon2" 
+        <button class="btn btn-outline-secondary btn-block">
+          Create a New Recipe
+        </button>
 
-      <% if @query_name != nil %>
-        value="<%= @query_name %>"
-      <% end %>
+      </div>
+    </form>  
+  </div>
 
-      >
-      <button class="btn btn-outline-secondary col-3">Search</button>
-    </div>
-  </form>
-</div>
+  <hr>
+  <br>
 
-<hr>
 
-<div>
-  <table class="table col-11 container justify-content-center">
-    <thead class="thead-dark">   
+<!-- Search -->
 
-      <th class="align-middle text-center" style="width: 8%;">
-        IBA
-      </th>
+  <h4 class="text-center">
+    Search by cocktail name
+  </h4>
 
-      <th class="align-middle" style="width: 24%;">
-        Recipe
-      </th>
+  <br>
 
-      <th class="align-middle">
-        Ingredients
-      </th>
+  <div class="col-9 container justify-content-center">
+    <form action="<%= @path %>">
+      <div class="input-group mb-3 col-12">
 
-      <th class="align-middle">
-      </th>
-
-    </tr>
-
-    <% @list_of_recipes.each do |a_recipe| %>
-      <tr>  
-
-        <td class="align-middle text-center" style="width: 8%;">
-          <% if a_recipe.iba_status == true %>
-            <i class="fas fa-award h5" style="color: goldenrod;"></i>
+        <input type="text" id="name_box" name="query_name" class="form-control col-9" placeholder="Cocktail name, ie: Manhattan" aria-label="cocktail_name" aria-describedby="button-addon2" 
+          <% if @query_name != nil %>
+            value="<%= @query_name %>"
           <% end %>
-        </td>
+        >
 
-        <td class="align-middle" style="width: 24%;">
-          <a href="/recipes/<%= a_recipe.id %>"><%= a_recipe.name %></a>
-        </td>
+        <button class="btn btn-outline-secondary col-3">
+          Search
+        </button>
 
-        <td class="align-middle">
-          <%= a_recipe.ingredient_list.to_s.gsub(/[^a-zé0-9\s\,]/i, "").capitalize %>
-        </td>
+      </div>
+    </form>
+  </div>
 
-        <td class="align-middle text-right">
+  <hr>
 
-          <% matching_records = SavedRecipe.where({ :user_id => @current_user.id, :recipe_id => a_recipe.id }) %>
-          <% saved_recipe = matching_records.first %>
 
-          <div>
-            <% if saved_recipe != nil %>
-              <form action="/delete_saved_recipe/<%= a_recipe.id %>">
-                <input type="hidden" id="source_url" name="query_source_url" value="<%= @path %>">
-                <input type="hidden" name="query_saved_recipe_id" value="<%= saved_recipe.id %>">
-                <button class="btn btn-outline-danger btn-sm">
-                  Unsave
-                </button>
-              </form>
+<!-- Results List -->
 
-            <% else %>
-              <form action="/insert_saved_recipe" method="post">
-                <input type="hidden" name="query_source_url" value="<%= @path %>">
-                <input type="hidden" name="query_recipe_id" value="<%= a_recipe.id %>">
-                <button class="btn btn-outline-secondary btn-sm">
-                  Save
-                </button>
-              </form>
+  <div>
+    <table class="table col-11 container justify-content-center">
+      <thead class="thead-dark">   
 
-            <% end %>
-          </div>
+        <th class="align-middle text-center" style="width: 8%;">
+          IBA
+        </th>
 
-        </td>
+        <th class="align-middle" style="width: 24%;">
+          Recipe
+        </th>
+
+        <th class="align-middle">
+          Ingredients
+        </th>
+
+        <th class="align-middle">
+        </th>
 
       </tr>
-    <% end %>
-  </table>
-</div>
 
-<% if @no_results == true %>
-  <p class="text-center">
-    No results where cocktail name includes "<%= @query_name %>"!
-  </p>
-<% end %>
+      <% @list_of_recipes.each do |a_recipe| %>
+        <tr>  
+
+          <td class="align-middle text-center" style="width: 8%;">
+            <% if a_recipe.iba_status == true %>
+              <i class="fas fa-award h5" style="color: goldenrod;"></i>
+            <% end %>
+          </td>
+
+          <td class="align-middle" style="width: 24%;">
+            <a href="/recipes/<%= a_recipe.id %>"><%= a_recipe.name %></a>
+          </td>
+
+          <td class="align-middle">
+            <%= a_recipe.ingredient_list.to_s.gsub(/[^a-zé0-9\s\,]/i, "").capitalize %>
+          </td>
+
+          <td class="align-middle text-right">
+
+            <% matching_records = SavedRecipe.where({ :user_id => @current_user.id, :recipe_id => a_recipe.id }) %>
+            <% saved_recipe = matching_records.first %>
+
+            <div>
+              <% if saved_recipe != nil %>
+                <form action="/delete_saved_recipe/<%= a_recipe.id %>">
+
+                  <input type="hidden" id="source_url" name="query_source_url" value="<%= @path %>">
+                  <input type="hidden" name="query_saved_recipe_id" value="<%= saved_recipe.id %>">
+
+                  <button class="btn btn-outline-danger btn-sm">
+                    Unsave
+                  </button>
+
+                </form>
+
+              <% else %>
+                <form action="/insert_saved_recipe" method="post">
+
+                  <input type="hidden" name="query_source_url" value="<%= @path %>">
+                  <input type="hidden" name="query_recipe_id" value="<%= a_recipe.id %>">
+
+                  <button class="btn btn-outline-secondary btn-sm">
+                    Save
+                  </button>
+                  
+                </form>
+
+              <% end %>
+            </div>
+
+          </td>
+
+        </tr>
+      <% end %>
+    </table>
+  </div>
+
+  <% if @no_results == true %>
+    <p class="text-center">
+      No results where cocktail name includes "<%= @query_name %>"!
+    </p>
+  <% end %>
 
 <hr>
